@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="Header">BMI calculator</string>
+    <string name="Weight">Weight(kg)</string>
+    <string name="Height">Height(cm)</string>
+    <string name="BMI">BMI = 0.00</string>
+    <string name="status">Status</string>
+    <string name="button1">button</string>
+
+    <string name="severethinness">Severe Thinness</string>
+    <string name="ModerateThinness">Moderate Thinness</string>
+    <string name="MildThinness">Mild Thinness</string>
+    <string name="normal">normal</string>
+    <string name="overweight">overweight</string>
+    <string name="obese">Obese Class I</string>
+    <string name="obese2">Obese Class II</string>
+    <string name="obese3">Obese Class III</string>
+
+    <string name="col_trans_id_str">Date</string>
+    <string name="col_name_str">weight</string>
+    <string name="col_msg_str">BMI</string>
+    <string name="col_amt_str">Status</string>
+
+</resources>

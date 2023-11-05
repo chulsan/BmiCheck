@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="Header">โปรแกรมคำนวณค่า BMI</string>
+    <string name="Weight">น้ำหนัก(กิโลกรัม)</string>
+    <string name="Height">ส่วนสูง(เซนติเมตร)</string>
+    <string name="BMI">BMI = 0.00</string>
+    <string name="status">อยู่ในเกณฑ์</string>
+    <string name="button1">คำนวณ</string>
+
+
+
+
+
+
+
+
+    <string name="severethinness">ผอมมาก</string>
+    <string name="ModerateThinness">ผอมปานกลาง</string>
+    <string name="MildThinness">ผอมน้อย</string>
+    <string name="normal">ปกติ</string>
+    <string name="overweight">ค่อนข้างอ้วน</string>
+    <string name="obese">อ้วนระดับ 1</string>
+    <string name="obese2">อ้วนระดับ 2</string>
+    <string name="obese3">อ้วนระดับ 3</string>
+
+
+
+    <string name="col_trans_id_str">วันที่</string>
+    <string name="col_name_str">น้ำหนัก</string>
+    <string name="col_msg_str">ค่าดัชนีมวลกาย</string>
+    <string name="col_amt_str">อยู่ในเกณฑ์</string>
+
+
+
+
+</resources>
