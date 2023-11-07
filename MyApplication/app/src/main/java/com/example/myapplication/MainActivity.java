@@ -7,6 +7,8 @@ import static com.example.myapplication.Constants.TABLE_NAME;
 import static com.example.myapplication.Constants.date;
 import static com.example.myapplication.Constants.weight;
 
+import android.content.ContentValues;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,10 +24,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     DBHelper dbh;
     EditText eWeight;
     Button btnViewAllData;
+    float bmiValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,36 +52,74 @@ public class MainActivity extends AppCompatActivity {
         eWeight= findViewById(R.id.weight);
         btnViewAllData=findViewById(R.id.btnView);
         dbh = new DBHelper(this);
-
+        btnViewAllData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    Cursor cursor = getEvents();
+                    showEvents(cursor);
+                }finally{
+                }
+            }
+        });
 
         edt1.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 2)});
         EditText edt2  = findViewById(R.id.weight);
         edt2.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 2)});
+
+    }
+    private void addEvent() {
+
+        EditText et1 = (EditText) findViewById(R.id.weight);
+        String string = String.format("%1$s", et1.getText());
+
+
+        TextView et3 =  findViewById(R.id.Status);
+        String string3 = String.format("%1$s", et3.getText());
+
+        SQLiteDatabase db = dbh.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        long timestamp = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateformat = new Date(timestamp);
+        String formattedDate = sdf.format(dateformat);
+        values.put(date , formattedDate);
+        values.put(weight, string);
+        values.put(BMI, bmiValue);
+        values.put(Status, string3);
+        db.insert(TABLE_NAME, null, values);
+
     }
 
+    private void showEvents(Cursor cursor) {
+        setContentView(R.layout.listview);
+        final ListView listView = (ListView)findViewById(R.id.test);
+        final ArrayList<HashMap<String, String>> MyArrList = new
+                ArrayList<HashMap<String, String>>();
+        HashMap<String, String> map;
+        while(cursor.moveToNext()) {
+            map = new HashMap<String, String>();
+            map.put("date", String.valueOf(cursor.getString(1)));
+            map.put("weight", String.valueOf(cursor.getLong(2)));
+            map.put("BMI", cursor.getString(3));
+            map.put("Status", cursor.getString(4));
+            MyArrList.add(map);
+        }
+        SimpleAdapter sAdap;
+        sAdap = new SimpleAdapter( MainActivity.this,
+                MyArrList, R.layout.activity_column,
+                new String[] {"date", "weight", "BMI", "Status"},
+                new int[] {R.id.col_date, R.id.col_weight, R.id.col_BMI, R.id.col_status} );
+        listView.setAdapter(sAdap);
+    }//end showEvents
 
     private Cursor getEvents(){
-        String[] FROM= {_ID, date, weight,  BMI, Status};
-        String ORDER_BY = date + " DESC";
+        String[] FROM= {_ID, date, weight, BMI, Status};
+        String ORDER_BY = _ID + " DESC";
         SQLiteDatabase db = dbh.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, FROM, null, null, null, null, ORDER_BY);
         return cursor;
     }
-
-    private long getLastId(){
-        long id =0;
-        SQLiteDatabase db = dbh.getWritableDatabase();
-        String[] FROM = {_ID};
-        String ORDER_BY= date + " DESC";
-        Cursor cursor = db.query(TABLE_NAME, FROM, null, null, null, null, ORDER_BY, "1");
-        while (cursor.moveToNext()){
-            id = cursor.getLong(0);
-        }
-        return id;
-    }
-
-
-
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -100,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView Status_txt = findViewById(R.id.Status);
         float Height = Float.parseFloat(In_height.getText().toString())/100;
         float Weight = Float.parseFloat(In_weight.getText().toString());
-        float bmiValue = (float) (Weight / (Height * Height));
+        bmiValue = (float) (Weight / (Height * Height));
         DecimalFormat formatter = new DecimalFormat("#,###.##");
         String resultBmi = ""+formatter.format(bmiValue);
         BMI_txt.setText("BMI = "+resultBmi);
@@ -133,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             Status_txt.setText(R.string.obese3);
             Status_txt.setTextColor(getColor(R.color.obese3));
         }
-
+        addEvent();
 
     }
 }

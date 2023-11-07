@@ -16,9 +16,9 @@
     <string name="obese2">Obese Class II</string>
     <string name="obese3">Obese Class III</string>
 
-    <string name="col_trans_id_str">Date</string>
-    <string name="col_name_str">weight</string>
-    <string name="col_msg_str">BMI</string>
-    <string name="col_amt_str">Status</string>
+    <string name="col_date_str">Date</string>
+    <string name="col_weight_str">weight</string>
+    <string name="col_BMI_str">BMI</string>
+    <string name="col_Status_str">Status</string>
 
 </resources>

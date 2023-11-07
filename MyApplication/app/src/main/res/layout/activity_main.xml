@@ -18,6 +18,15 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="@string/Header">
+        <Button
+            android:layout_margin="5sp"
+            android:id="@+id/btnView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Data"
+            android:layout_gravity="right"
+            android:onClick="ViewData"
+            />
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -91,15 +100,7 @@
             android:onClick="clickToCalculate"
             android:text="@string/button1" />
 
-        <Button
-            android:layout_margin="5sp"
-            android:id="@+id/btnView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Data"
 
-
-            />
 
 
     </LinearLayout>
